@@ -18,7 +18,7 @@ export default function ShippingInfoModal({ isOpen, onClose, client }: Props) {
   if (!isOpen || !client) return null;
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal open={isOpen} onClose={onClose}>
       <div className="p-6 w-full max-w-xl">
         <h2 className="text-2xl font-bold mb-6 text-gray-900">
           Información de Envío

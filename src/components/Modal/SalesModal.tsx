@@ -103,7 +103,7 @@ export default function SalesModals({
                 <ul>
                   {selectedSale.items.map((item, i) => (
                     <li key={i}>
-                      {item.product.name} x {item.quantity} - $
+                      {item.productName} x {item.quantity} - $
                       {item.price.toFixed(2)}
                     </li>
                   ))}
