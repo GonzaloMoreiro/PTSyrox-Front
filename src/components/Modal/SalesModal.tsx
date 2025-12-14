@@ -23,7 +23,7 @@ export default function SalesModals({
   return (
     <>
       <Modal
-        isOpen={modals.add}
+        open={modals.add}
         onClose={() => setModals((prev) => ({ ...prev, add: false }))}
       >
         <div className="w-full max-w-[90vw] p-16 bg-white rounded-2xl shadow-xl">
@@ -46,7 +46,7 @@ export default function SalesModals({
       </Modal>
 
       <Modal
-        isOpen={modals.edit}
+        open={modals.edit}
         onClose={() => setModals((prev) => ({ ...prev, edit: false }))}
       >
         {selectedSale && (
@@ -75,7 +75,7 @@ export default function SalesModals({
       </Modal>
 
       <Modal
-        isOpen={modals.details}
+        open={modals.details}
         onClose={() => setModals((prev) => ({ ...prev, details: false }))}
       >
         {selectedSale && (

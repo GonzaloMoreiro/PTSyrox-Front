@@ -169,7 +169,7 @@ export default function Products() {
           )}
 
           <Modal
-            isOpen={isEditModalOpen}
+            open={isEditModalOpen}
             onClose={() => {
               console.log("Cerrando modal de edición");
               setIsEditModalOpen(false);
