@@ -60,14 +60,12 @@ export default function Products() {
     fetchCategories();
   }, []);
 
-  // ✅ CORREGIDO: Agregar producto al array
   const handleAddProduct = async (productData: Omit<Product, "id">) => {
     try {
       const res = await axios.post(
         "http://localhost:3000/products",
         productData
       );
-      // Agregar el nuevo producto al final del array
       setProducts((prev) => [...prev, res.data]);
       setIsAddModalOpen(false);
     } catch (err: any) {
@@ -80,7 +78,6 @@ export default function Products() {
     }
   };
 
-  // Editar
   const handleEditProduct = (product: Product) => {
     console.log("Abriendo modal para editar:", product);
     setSelectedProduct(product);
@@ -123,7 +120,6 @@ export default function Products() {
     }
   };
 
-  // Eliminar
   const handleDeleteProduct = async (product: Product) => {
     if (!confirm(`¿Eliminar producto "${product.name}"?`)) return;
     try {
@@ -146,27 +142,18 @@ export default function Products() {
       <div className="flex min-h-screen bg-gray-100">
         <Sidebar />
 
-        <div className="flex-1 p-6">
-          <div className="flex justify-between items-center mb-4">
-            <h1 className="text-2xl font-bold">Productos</h1>
-            <button
-              className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
-              onClick={() => navigate("/products/new")}
-            >
-              Nuevo Producto
-            </button>
-          </div>
+        <div className="flex-1 pt-20 p-6">
+          <ProductInventory
+            products={products}
+            loading={loading}
+            onEdit={handleEditProduct}
+            onDelete={handleDeleteProduct}
+            onAdd={() => setIsAddModalOpen(true)}
+          />
 
-          {loading ? (
-            <p>Cargando productos...</p>
-          ) : (
-            <ProductInventory
-              products={products}
-              loading={loading}
-              onEdit={handleEditProduct}
-              onDelete={handleDeleteProduct}
-            />
-          )}
+          <Modal open={isAddModalOpen} onClose={() => setIsAddModalOpen(false)}>
+            <ProductForm onSubmit={handleAddProduct} categories={categories} />
+          </Modal>
 
           <Modal
             open={isEditModalOpen}

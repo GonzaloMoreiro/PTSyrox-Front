@@ -38,9 +38,6 @@ export default function Categories() {
     fetchCategories();
   }, []);
 
-  /* =====================
-     CREATE
-  ====================== */
   const handleAddCategory = async (name: string) => {
     try {
       const res = await axios.post("http://localhost:3000/categories", {
@@ -54,10 +51,6 @@ export default function Categories() {
       alert("Error al agregar categoría");
     }
   };
-
-  /* =====================
-     EDIT
-  ====================== */
   const handleEditCategory = (category: Category) => {
     setSelectedCategory(category);
     setIsEditModalOpen(true);
@@ -84,9 +77,6 @@ export default function Categories() {
     }
   };
 
-  /* =====================
-     DELETE
-  ====================== */
   const handleDeleteCategory = async (category: Category) => {
     if (!confirm(`¿Eliminar categoría "${category.name}"?`)) return;
 
@@ -117,7 +107,6 @@ export default function Categories() {
         </main>
       </div>
 
-      {/* ===== MODAL AGREGAR ===== */}
       <Modal
         open={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
@@ -129,7 +118,6 @@ export default function Categories() {
         />
       </Modal>
 
-      {/* ===== MODAL EDITAR ===== */}
       <Modal
         open={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}

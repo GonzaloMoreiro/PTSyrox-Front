@@ -36,7 +36,7 @@ export default function SalesPage() {
       <Navbar />
       <div className="flex min-h-screen bg-gray-100">
         <Sidebar />
-        <div className="flex-1 p-6">
+        <div className="flex-1 pt-20 p-6">
           <SalesTable
             sales={sales}
             loading={loading}

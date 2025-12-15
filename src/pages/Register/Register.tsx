@@ -20,7 +20,6 @@ function Register() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Si ya está logeado → no mostrar registro
   useEffect(() => {
     const user = localStorage.getItem("user");
     if (user) {
@@ -137,7 +136,7 @@ function Register() {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full bg-zinc-800 hover:bg-zinc-700"
+              className="w-full bg-black text-white py-3 rounded-xl text-lg hover:bg-gray-800 transition"
             >
               {loading ? "Creando cuenta..." : "Registrarse"}
             </Button>

@@ -12,7 +12,6 @@ export default function Navbar() {
   return (
     <nav className="w-full fixed top-0 left-0 bg-white border-b border-gray-200 shadow-sm z-[1000]">
       <div className="px-20 py-4 flex items-center justify-between">
-        {/* Logo */}
         <Link to="/" className="flex items-center gap-3">
           <img
             src="https://img.freepik.com/vector-premium/logotipo-servicio-reparacion-automoviles-monocromo_679076-212.jpg?semt=ais_hybrid&w=740&q=80"

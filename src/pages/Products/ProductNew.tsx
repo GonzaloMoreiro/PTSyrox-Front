@@ -22,7 +22,7 @@ export default function ProductFormPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
-  const { id } = useParams<{ id: string }>(); // Para editar si existe ID
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
   useEffect(() => {

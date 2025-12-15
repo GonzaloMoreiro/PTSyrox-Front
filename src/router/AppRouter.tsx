@@ -9,10 +9,8 @@ export default function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Login */}
         <Route path="/" element={<Login />} />
 
-        {/* Panel */}
         <Route element={<AdminLayout />}>
           <Route path="/categories" element={<Categories />} />
           <Route path="/products" element={<Products />} />

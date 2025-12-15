@@ -20,7 +20,11 @@ interface ProductOption {
 interface Props {
   onSubmit: (data: {
     clientId: string;
-    items: { productId: string; quantity: number }[];
+    items: { productId: string; quantity: number; price: number }[];
+    total: number;
+    status: string;
+    paymentStatus: string;
+    orderNumber: string;
   }) => void;
 }
 
@@ -31,8 +35,9 @@ export default function NewSaleForm({ onSubmit }: Props) {
   const [selectedProducts, setSelectedProducts] = useState<
     { productId: string; quantity: number }[]
   >([]);
+  const [status, setStatus] = useState("En preparación");
+  const [paymentStatus, setPaymentStatus] = useState("Pendiente");
 
-  // MODAL ESTADO
   const [shippingModalOpen, setShippingModalOpen] = useState(false);
 
   const selectedClient = clients.find((c) => c.id === userId) || null;
@@ -56,13 +61,39 @@ export default function NewSaleForm({ onSubmit }: Props) {
     setSelectedProducts([...selectedProducts, { productId: "", quantity: 1 }]);
   };
 
+  const calculateTotal = () => {
+    return selectedProducts.reduce((acc, p) => {
+      const prod = products.find((x) => x.id === p.productId);
+      return acc + (prod ? prod.price * p.quantity : 0);
+    }, 0);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!userId) return alert("Seleccioná un cliente.");
+
+    const validProducts = selectedProducts.filter((p) => p.productId !== "");
+
+    if (validProducts.length === 0) {
+      return alert("Agregá al menos un producto.");
+    }
+
+    const items = validProducts.map((item) => {
+      const product = products.find((p) => p.id === item.productId);
+      return {
+        productId: item.productId,
+        quantity: item.quantity,
+        price: product?.price || 0,
+      };
+    });
+
     onSubmit({
-      clientId: userId,
-      items: selectedProducts.filter((p) => p.productId !== ""),
+      userId: userId,
+      items: items.map((i) => ({
+        productId: i.productId,
+        quantity: i.quantity,
+      })),
     });
   };
 
@@ -124,7 +155,6 @@ export default function NewSaleForm({ onSubmit }: Props) {
                 </div>
               </div>
             )}
-
             <div className="bg-white border p-6 rounded-2xl shadow-sm">
               <h3 className="font-semibold text-lg text-gray-800 mb-4">
                 Productos
@@ -194,20 +224,28 @@ export default function NewSaleForm({ onSubmit }: Props) {
               Resumen del Pedido
             </h3>
 
-            <p className="text-gray-700 text-lg">
-              Productos agregados: <strong>{selectedProducts.length}</strong>
-            </p>
+            <div className="space-y-3">
+              <p className="text-gray-700 text-lg">
+                Productos: <strong>{selectedProducts.length}</strong>
+              </p>
 
-            <p className="text-gray-700 text-lg mt-4">
-              Total:{" "}
-              <strong className="text-2xl">
-                $
-                {selectedProducts.reduce((acc, p) => {
-                  const prod = products.find((x) => x.id === p.productId);
-                  return acc + (prod ? prod.price * p.quantity : 0);
-                }, 0)}
-              </strong>
-            </p>
+              <p className="text-gray-700 text-lg">
+                Estado: <strong>{status}</strong>
+              </p>
+
+              <p className="text-gray-700 text-lg">
+                Pago: <strong>{paymentStatus}</strong>
+              </p>
+
+              <div className="border-t pt-4 mt-4">
+                <p className="text-gray-700 text-lg">
+                  Total:{" "}
+                  <strong className="text-2xl text-green-600">
+                    ${calculateTotal().toFixed(2)}
+                  </strong>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
